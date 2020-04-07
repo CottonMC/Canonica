@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "starter",
+  "id": "getres",
   "version": "${version}",
 
-  "name": "Fabric Starter",
+  "name": "GetRes",
   "icon": "assets/starter/icon.png",
   "description": "Template for starting out Fabric mods",
   "license": "MIT",
@@ -13,11 +13,11 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "io.github.cottonmc.starter.FabricStarter"
+      "io.github.cottonmc.getres.GetRes"
     ]
   },
   "mixins": [
-    "mixins.starter.json"
+    "mixins.getres.json"
   ],
   "depends": {
     "fabricloader": ">=0.4.0"

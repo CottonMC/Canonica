@@ -34,6 +34,13 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	compileOnly "com.google.code.findbugs:jsr305:3.0.2"
+
+	modImplementation "io.github.cottonmc:Jankson-Fabric:${project.jankson_version}"
+	include "io.github.cottonmc:Jankson-Fabric:${project.jankson_version}"
+	
+	modImplementation "io.github.cottonmc.cotton:cotton-datapack:${project.cotton_version}"
+    include "io.github.cottonmc.cotton:cotton-datapack:${project.cotton_version}"
+	include "io.github.cottonmc.cotton:cotton-config:1.0.0-rc.1"
 }
 
 processResources {
