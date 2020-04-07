@@ -5,10 +5,10 @@
 
   "name": "GetRes",
   "icon": "assets/starter/icon.png",
-  "description": "Template for starting out Fabric mods",
+  "description": "System for commonly-registered resources to prevent duplication",
   "license": "MIT",
   "contact": {
-    "sources": "https://github.com/CottonMC/FabricStarter"
+    "sources": "https://github.com/CottonMC/GetRes"
   },
   "environment": "*",
   "entrypoints": {

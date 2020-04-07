@@ -5,9 +5,9 @@ import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import net.fabricmc.fabric.api.loot.v1.LootEntryTypeRegistry;
 import net.fabricmc.loader.api.FabricLoader;
 
 import blue.endless.jankson.Jankson;
@@ -16,6 +16,7 @@ import blue.endless.jankson.JsonObject;
 import io.github.cottonmc.cotton.datapack.tags.TagEntryManager;
 import io.github.cottonmc.cotton.datapack.tags.TagType;
 import io.github.cottonmc.getres.config.CanonNamespaces;
+import io.github.cottonmc.getres.loot.ResourceEntrySerializer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -45,6 +46,7 @@ public class GetRes implements ModInitializer {
 		if (canonNamespaces == null) {
 			canonNamespaces = loadCanon();
 		}
+		LootEntryTypeRegistry.INSTANCE.register(new ResourceEntrySerializer());
 	}
 
 	public static Item getItemResource(String resourceName, String defaultId) {

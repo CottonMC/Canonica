@@ -3,6 +3,7 @@
   "package": "io.github.cottonmc.getres.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "ItemEntrySerializerAccessor",
     "MixinShapedRecipe"
   ]
 }
