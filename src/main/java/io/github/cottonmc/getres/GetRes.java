@@ -21,6 +21,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -36,26 +38,35 @@ public class GetRes implements ModInitializer {
 	//TODO: random resource
 	public static final ItemGroup GETRES_GROUP = FabricItemGroupBuilder.build(new Identifier(MODID, "resources"), () -> new ItemStack(Items.DIAMOND));
 
-	private static CanonNamespaces canonNamespaces;
+	private static CanonNamespaces canonNames;
 
 	private static final Map<String, Item> canonItems = new HashMap<>();
-	private static final Map<String, Block> canonBlocks = new HashMap<>(); //TODO: best way to do agreed-upon settings? config maybe?
 
 	@Override
 	public void onInitialize() {
-		if (canonNamespaces == null) {
-			canonNamespaces = loadCanon();
+		if (canonNames == null) {
+			canonNames = loadCanon();
 		}
 		LootEntryTypeRegistry.INSTANCE.register(new ResourceEntrySerializer());
 	}
 
-	public static Item getItemResource(String resourceName, String defaultId) {
-		if (canonNamespaces == null) {
-			canonNamespaces = loadCanon();
+	public static Item getResource(String resourceName, String defaultId) {
+		if (canonNames == null) {
+			canonNames = loadCanon();
 		}
 		Item ret = canonItems.computeIfAbsent(resourceName, name -> registerItem(new Identifier(name, resourceName)));
-		canonNamespaces.itemNamespaces.put(resourceName, defaultId);
-		saveCanon(canonNamespaces);
+		canonNames.itemNamespaces.put(resourceName, defaultId);
+		saveCanon(canonNames);
+		return ret;
+	}
+
+	public static Item getResource(String resourceName, Block defaultBlock) {
+		if (canonNames == null) {
+			canonNames = loadCanon();
+		}
+		Item ret = canonItems.computeIfAbsent(resourceName, name -> registerBlockItem(defaultBlock));
+		canonNames.blockItemNamespaces.put(resourceName, Registry.BLOCK.getId(defaultBlock).toString());
+		saveCanon(canonNames);
 		return ret;
 	}
 
@@ -65,6 +76,14 @@ public class GetRes implements ModInitializer {
 
 	private static Item registerItem(Identifier name) {
 		Item ret = Registry.register(Registry.ITEM, name, new Item(new Item.Settings().group(GETRES_GROUP)));
+		Identifier tagId = new Identifier("c", name.getPath() + "s"); //TODO: better way to pluralize?
+		TagEntryManager.registerToTag(TagType.ITEM, tagId, name.toString());
+		return ret;
+	}
+
+	private static Item registerBlockItem(Block block) {
+		Identifier name = Registry.BLOCK.getId(block);
+		Item ret = Registry.register(Registry.ITEM, name, new BlockItem(block, new Item.Settings().group(GETRES_GROUP)));
 		Identifier tagId = new Identifier("c", name.getPath() + "s"); //TODO: better way to pluralize?
 		TagEntryManager.registerToTag(TagType.ITEM, tagId, name.toString());
 		return ret;
@@ -86,6 +105,13 @@ public class GetRes implements ModInitializer {
 			}
 			for (String name : result.itemNamespaces.keySet()) {
 				Item item = registerItem(new Identifier(result.itemNamespaces.get(name), name));
+				canonItems.put(name, item);
+			}
+			//TODO: is this a load order risk?
+			for (String name : result.blockItemNamespaces.keySet()) {
+				Block block = Registry.BLOCK.get(new Identifier(result.blockItemNamespaces.get(name)));
+				if (block == Blocks.AIR) throw new RuntimeException("Tell B0undary to fix the block item load order issue!");
+				Item item = registerBlockItem(block);
 				canonItems.put(name, item);
 			}
 			return result;
