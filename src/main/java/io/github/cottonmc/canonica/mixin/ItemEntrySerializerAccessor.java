@@ -1,4 +1,4 @@
-package io.github.cottonmc.getres.mixin;
+package io.github.cottonmc.canonica.mixin;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;

@@ -1,9 +1,11 @@
 {
   "required": true,
-  "package": "io.github.cottonmc.getres.mixin",
+  "package": "io.github.cottonmc.canonica.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "ItemEntrySerializerAccessor",
+    "MixinCookingRecipeSerializer",
+    "MixinCuttingRecipeSerializer",
     "MixinShapedRecipe"
   ]
 }

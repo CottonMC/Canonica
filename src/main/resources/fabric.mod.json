@@ -1,27 +1,28 @@
 {
   "schemaVersion": 1,
-  "id": "getres",
+  "id": "canonica",
   "version": "${version}",
 
-  "name": "GetRes",
+  "name": "Canonica",
   "icon": "assets/starter/icon.png",
-  "description": "System for commonly-registered resources to prevent duplication",
+  "description": "Unified outputs from tags in data-driven content",
   "license": "MIT",
   "contact": {
-    "sources": "https://github.com/CottonMC/GetRes"
+    "sources": "https://github.com/CottonMC/Canonica"
   },
   "environment": "*",
   "entrypoints": {
     "main": [
-      "io.github.cottonmc.getres.GetRes"
+      "io.github.cottonmc.canonica.Canonica"
     ]
   },
   "mixins": [
-    "mixins.getres.json"
+    "mixins.canonica.json"
   ],
   "depends": {
-    "fabricloader": ">=0.4.0"
+    "fabricloader": ">=0.8.0"
   },
+  "accessWidener": "canonica.accesswidener",
   "custom": {
     "modmenu:api": true
   }

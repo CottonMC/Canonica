@@ -2,7 +2,7 @@ plugins {
 	id "java"
 	id "eclipse"
 	id "idea"
-	id "fabric-loom" version "0.2.6-SNAPSHOT"
+	id "fabric-loom" version "0.2.7-SNAPSHOT"
 	id "maven-publish"
 	id "com.jfrog.artifactory" version "4.9.0"
 }
@@ -19,13 +19,13 @@ group = "${project.maven_group}"
 version = "${project.mod_version}+${project.minecraft_version}"
 
 minecraft {
+	accessWidener = file("src/main/resources/canonica.accesswidener")
 }
 
 repositories {
 	mavenCentral()
 	maven { url "http://maven.fabricmc.net/" } // Fabric maven - home of Fabric API and ModMenu
 	maven { url "https://server.bbkr.space/artifactory/libs-release" } // Cotton maven - home of Cotton projects
-	maven { url "https://maven.abusedmaster.xyz" } // NerdHub maven - home of Cardinal Components
 }
 
 dependencies {
@@ -37,10 +37,6 @@ dependencies {
 
 	modImplementation "io.github.cottonmc:Jankson-Fabric:${project.jankson_version}"
 	include "io.github.cottonmc:Jankson-Fabric:${project.jankson_version}"
-	
-	modImplementation "io.github.cottonmc.cotton:cotton-datapack:${project.cotton_version}"
-    include "io.github.cottonmc.cotton:cotton-datapack:${project.cotton_version}"
-	include "io.github.cottonmc.cotton:cotton-config:1.0.0-rc.1"
 }
 
 processResources {
